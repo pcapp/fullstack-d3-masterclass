@@ -4,7 +4,6 @@ async function drawLineChart() {
   // write your code here
   const data = await d3.json("data/my_weather_data.json");
 
-  console.log(data[0]);
   const getMaxTemp = (d) => d["temperatureHigh"];
   const parseDate = d3.timeParse("%Y-%m-%d");
   const getDate = (d) => parseDate(d["date"]);
@@ -67,6 +66,15 @@ async function drawLineChart() {
     .attr("fill", "none")
     .attr("stroke", "cornflowerblue")
     .attr("stroke-width", 2);
+
+  const yAxisGenerator = d3.axisLeft().scale(yScale);
+  const yAxis = bounds.append("g").call(yAxisGenerator);
+
+  const xAxisGenerator = d3.axisBottom().scale(xScale);
+  const xAxis = bounds
+    .append("g")
+    .call(xAxisGenerator)
+    .style("transform", `translateY(${dims.boundedHeight}px)`);
 }
 
 drawLineChart();
